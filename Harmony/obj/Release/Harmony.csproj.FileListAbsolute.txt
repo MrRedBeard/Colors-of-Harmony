@@ -1,0 +1,9 @@
+E:\Programming\DotNet\Harmony\Harmony\bin\Release\Harmony.exe
+E:\Programming\DotNet\Harmony\Harmony\bin\Release\Harmony.pdb
+E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.csprojResolveAssemblyReference.cache
+E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.FrmMain.resources
+E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.MusicSheet.resources
+E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.Properties.Resources.resources
+E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.csproj.GenerateResource.Cache
+E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.exe
+E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.pdb
