@@ -37,6 +37,8 @@
             this.BtnConvert = new System.Windows.Forms.Button();
             this.LbTip = new System.Windows.Forms.Label();
             this.BtnSynth = new System.Windows.Forms.Button();
+            this.TmrRedraw = new System.Windows.Forms.Timer(this.components);
+            this.tt = new System.Windows.Forms.ToolTip(this.components);
             this.sheet = new Harmony.MusicSheet();
             this.SuspendLayout();
             // 
@@ -50,10 +52,11 @@
             this.BtnOpen.Location = new System.Drawing.Point(16, 16);
             this.BtnOpen.Margin = new System.Windows.Forms.Padding(4);
             this.BtnOpen.Name = "BtnOpen";
-            this.BtnOpen.Size = new System.Drawing.Size(100, 30);
+            this.BtnOpen.Size = new System.Drawing.Size(100, 36);
             this.BtnOpen.TabIndex = 0;
             this.BtnOpen.TabStop = false;
             this.BtnOpen.Text = "Open";
+            this.tt.SetToolTip(this.BtnOpen, "Open audio/video file (Ctrl + O)");
             this.BtnOpen.UseVisualStyleBackColor = false;
             this.BtnOpen.Click += new System.EventHandler(this.BtnOpen_Click);
             // 
@@ -67,10 +70,11 @@
             this.BtnPlay.Location = new System.Drawing.Point(124, 16);
             this.BtnPlay.Margin = new System.Windows.Forms.Padding(4);
             this.BtnPlay.Name = "BtnPlay";
-            this.BtnPlay.Size = new System.Drawing.Size(100, 30);
+            this.BtnPlay.Size = new System.Drawing.Size(100, 36);
             this.BtnPlay.TabIndex = 1;
             this.BtnPlay.TabStop = false;
             this.BtnPlay.Text = "Play";
+            this.tt.SetToolTip(this.BtnPlay, "Play/pause music (Space)");
             this.BtnPlay.UseVisualStyleBackColor = false;
             this.BtnPlay.Visible = false;
             this.BtnPlay.Click += new System.EventHandler(this.BtnPlay_Click);
@@ -90,10 +94,11 @@
             this.BtnSave.Location = new System.Drawing.Point(908, 16);
             this.BtnSave.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Size = new System.Drawing.Size(100, 30);
+            this.BtnSave.Size = new System.Drawing.Size(100, 36);
             this.BtnSave.TabIndex = 5;
             this.BtnSave.TabStop = false;
             this.BtnSave.Text = "Export";
+            this.tt.SetToolTip(this.BtnSave, "Export the sheet music as an image (Ctrl + E)");
             this.BtnSave.UseVisualStyleBackColor = false;
             this.BtnSave.Visible = false;
             this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
@@ -109,22 +114,23 @@
             this.BtnConvert.Location = new System.Drawing.Point(800, 16);
             this.BtnConvert.Margin = new System.Windows.Forms.Padding(4);
             this.BtnConvert.Name = "BtnConvert";
-            this.BtnConvert.Size = new System.Drawing.Size(100, 30);
+            this.BtnConvert.Size = new System.Drawing.Size(100, 36);
             this.BtnConvert.TabIndex = 6;
             this.BtnConvert.TabStop = false;
             this.BtnConvert.Text = "Convert";
+            this.tt.SetToolTip(this.BtnConvert, "Convert the current audio file to another audio format (Ctrl + T)");
             this.BtnConvert.UseVisualStyleBackColor = false;
             this.BtnConvert.Visible = false;
             this.BtnConvert.Click += new System.EventHandler(this.BtnConvert_Click);
             // 
             // LbTip
             // 
-            this.LbTip.AutoSize = true;
-            this.LbTip.Location = new System.Drawing.Point(362, 22);
+            this.LbTip.Location = new System.Drawing.Point(362, 16);
             this.LbTip.Name = "LbTip";
-            this.LbTip.Size = new System.Drawing.Size(386, 18);
+            this.LbTip.Size = new System.Drawing.Size(358, 36);
             this.LbTip.TabIndex = 7;
-            this.LbTip.Text = "Tip: Right click near the left end of a note to edit it.";
+            this.LbTip.Text = "Right click near the left end of a note to edit it. \r\nCtrl+N to add a note.";
+            this.LbTip.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LbTip.Visible = false;
             // 
             // BtnSynth
@@ -137,13 +143,18 @@
             this.BtnSynth.Location = new System.Drawing.Point(232, 16);
             this.BtnSynth.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSynth.Name = "BtnSynth";
-            this.BtnSynth.Size = new System.Drawing.Size(100, 30);
+            this.BtnSynth.Size = new System.Drawing.Size(100, 36);
             this.BtnSynth.TabIndex = 8;
             this.BtnSynth.TabStop = false;
             this.BtnSynth.Text = "Synth";
+            this.tt.SetToolTip(this.BtnSynth, "Play synthesized notes (Ctrl + S)");
             this.BtnSynth.UseVisualStyleBackColor = false;
             this.BtnSynth.Visible = false;
             this.BtnSynth.Click += new System.EventHandler(this.BtnSynth_Click);
+            // 
+            // TmrRedraw
+            // 
+            this.TmrRedraw.Tick += new System.EventHandler(this.TmrRedraw_Tick);
             // 
             // sheet
             // 
@@ -156,7 +167,7 @@
             this.sheet.Font = new System.Drawing.Font("Verdana", 10F);
             this.sheet.ForeColor = System.Drawing.Color.GhostWhite;
             this.sheet.Length = System.TimeSpan.Parse("00:00:00");
-            this.sheet.Location = new System.Drawing.Point(1, 64);
+            this.sheet.Location = new System.Drawing.Point(1, 71);
             this.sheet.Margin = new System.Windows.Forms.Padding(4);
             this.sheet.MinimumSize = new System.Drawing.Size(220, 0);
             this.sheet.Name = "sheet";
@@ -164,7 +175,7 @@
             this.sheet.NoteWidth = 40F;
             this.sheet.RowPadding = 95F;
             this.sheet.SheetPadding = new System.Windows.Forms.Padding(35, 30, 20, 10);
-            this.sheet.Size = new System.Drawing.Size(1025, 553);
+            this.sheet.Size = new System.Drawing.Size(1025, 546);
             this.sheet.SpaceHeight = 15F;
             this.sheet.StaffSpacing = 55F;
             this.sheet.Synthesizing = false;
@@ -202,7 +213,6 @@
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.sheet_KeyUp);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -216,6 +226,8 @@
         private System.Windows.Forms.Button BtnConvert;
         private System.Windows.Forms.Label LbTip;
         private System.Windows.Forms.Button BtnSynth;
+        private System.Windows.Forms.Timer TmrRedraw;
+        private System.Windows.Forms.ToolTip tt;
     }
 }
 

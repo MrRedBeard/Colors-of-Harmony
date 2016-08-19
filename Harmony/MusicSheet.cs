@@ -471,12 +471,12 @@ namespace Harmony
             /// <summary>
             /// Get the name of the note with the specified offset from middle C
             /// </summary>
-            public static string NameFromOffset(float offset)
+            public static string[] NameFromOffset(float offset)
             {
                 int octave = (int)(4 + Math.Floor(offset / 7));
                 offset = (float)Modulo((decimal)offset, 7);
                 string name = ((char)('A' + (int)Modulo((decimal)offset + 2, ('H' - 'A')))).ToString();
-                return name + octave.ToString();
+                return new[] { name, octave.ToString() };
             }
 
             /// <summary>
@@ -676,7 +676,7 @@ namespace Harmony
         /// <summary>
         /// Converts a client distance from the top to a note name
         /// </summary>
-        public string YPosToNote(double top)
+        public string[] YPosToNote(double top)
         {
             double y = (top - SheetPadding.Top) % LineHeight;
             y -= RowPadding + SpaceHeight * 4 + StaffSpacing / 2;
@@ -750,7 +750,6 @@ namespace Harmony
         /// </summary>
         public void Redraw()
         {
-            try {
                 int high = (int)(Lines * (2 * RowPadding + StaffSpacing + 2 * 4 * SpaceHeight)) +
                                                     SheetPadding.Top + SheetPadding.Bottom;
                 Bitmap oldBuf = _buf;
@@ -810,7 +809,7 @@ namespace Harmony
                         g.DrawLine(linePen, (float)left, top, (float)left, top + barHeight * 2 + StaffSpacing);
                     }
                     // update total time
-                    string tmr = String.Format("{0}:{1}:{2}.{3}",
+                    string tmr = string.Format("{0}:{1}:{2}.{3}",
                         Length.Hours.ToString().PadLeft(2, '0'), Length.Minutes.ToString().PadLeft(2, '0'),
                         Length.Seconds.ToString().PadLeft(2, '0'), ((double)Length.Milliseconds / 1000).ToString("F4").Substring(2));
                     if (tmr.StartsWith("00:")) tmr = tmr.Substring(3);
@@ -881,8 +880,6 @@ namespace Harmony
                 canvas.Width = _buf.Width;
 
                 canvas.Invalidate();
-            }
-            catch { }
         }
 
         private void canvas_Paint(object sender, PaintEventArgs e)
@@ -896,7 +893,7 @@ namespace Harmony
                     {
                         PointF pt = TimeToPos(_time);
                         e.Graphics.DrawLine(timePen, pt.X, pt.Y + 20, pt.X, pt.Y + StaffSpacing + 8 * SpaceHeight + 2 * RowPadding);
-                        string tmr = String.Format("{0}:{1}:{2}.{3}",
+                        string tmr = string.Format("{0}:{1}:{2}.{3}",
                             _time.Hours.ToString().PadLeft(2, '0'), _time.Minutes.ToString().PadLeft(2, '0'),
                             _time.Seconds.ToString().PadLeft(2, '0'), ((double)_time.Milliseconds / 1000).ToString("F4").Substring(2));
                         if (tmr.StartsWith("00:")) tmr = tmr.Substring(3);
@@ -957,7 +954,7 @@ namespace Harmony
                     {
                         for (int y = e.Y - 5; y <= e.Y + 5; y += 5)
                         {
-                            string name = YPosToNote(y);
+                            string name =string.Join("", YPosToNote(y));
                             for (int i = 0; i < 2; ++i)
                             {
                                 if (_notes[ts].ContainsKey(name))
@@ -1100,6 +1097,26 @@ namespace Harmony
 
         private void MusicSheet_KeyUp(object sender, KeyEventArgs e)
         {
+            if (_editNote != null && PnlEditNote.Visible)
+            {
+                if (e.KeyCode == Keys.Delete)
+                {
+                    BtnDelNote.PerformClick();
+                }
+                else if (e.KeyCode == Keys.D)
+                {
+                    BtnDuplicate.PerformClick();
+                }
+            }
+
+            if (e.KeyCode == Keys.N)
+            {
+                Point pt = canvas.PointToClient(Cursor.Position);
+                string[] name = YPosToNote(pt.Y);
+                AddNote(new Note(PosToTime(pt), name:name[0], octave : int.Parse( name[1]), value:TimePerNote));
+                Redraw();
+            }
+
             if (this.InnerKeyUp != null)
                 this.InnerKeyUp(sender, e);
         }

@@ -31,6 +31,11 @@ namespace Harmony
             }
         }
 
+        private void FourierComplete(object sender, EventArgs e)
+        {
+            TmrRedraw.Stop();
+        }
+
         double _maxLen = 0;
         TimeSpan _prevTime = TimeSpan.FromTicks(-1);
         TimeSpan _curTime = TimeSpan.Zero;
@@ -101,7 +106,6 @@ namespace Harmony
                         }
                     }
                     sheet.AddNote(curNote);
-                    sheet.Redraw();
                 }
             }
             else
@@ -165,6 +169,7 @@ namespace Harmony
                 TmrUpdate.Stop();
                 if (_file != null) { 
                     _file.FourierProgress -= FourierProgress;
+                    _file.FourierComplete -= FourierComplete;
                     _file.Dispose();
                 }
                 BtnPlay.Show();
@@ -185,12 +190,12 @@ namespace Harmony
 
                 _file.LoadComplete += (object sender, EventArgs e) =>
                 {
-
                     LbTip.Invoke(new Action(delegate {
-                        LbTip.Text = "Tip: Right click near the left end of a note to edit it.";
+                        LbTip.Text = "Right click near the left end of a note to edit it.\nCtrl + N to add a note.";
                     }));
                     _file.Stopped += PlaybackStopped;
                     _file.FourierProgress += FourierProgress;
+                    _file.FourierComplete += FourierComplete;
 
                     _prevTime = TimeSpan.FromTicks(-1);
                     _curTime = TimeSpan.Zero;
@@ -202,6 +207,7 @@ namespace Harmony
 
                         sheet.Redraw();
                         sheet.ScrollTop();
+                        TmrRedraw.Start();
                     }));
 
                     _file.Analyze();
@@ -225,6 +231,18 @@ namespace Harmony
                 if (e.KeyCode == Keys.O)
                 {
                     BtnOpen.PerformClick();
+                }
+                else if (e.KeyCode == Keys.E)
+                {
+                    BtnSave.PerformClick();
+                }
+                else if (e.KeyCode == Keys.T)
+                {
+                    BtnConvert.PerformClick();
+                }
+                else if (e.KeyCode == Keys.S)
+                {
+                    BtnSynth.PerformClick();
                 }
                 else if (e.KeyCode == Keys.Add || e.KeyCode == Keys.Oemplus)
                 {
@@ -289,6 +307,7 @@ namespace Harmony
 
         private void BtnConvert_Click(object sender, EventArgs e)
         {
+            sheet.Focus();
             MediaFile inFile = new MediaFile(_file.FilePath);
             using (SaveFileDialog diag =new SaveFileDialog())
             {
@@ -314,6 +333,7 @@ namespace Harmony
 
         private void BtnSynth_Click(object sender, EventArgs e)
         {
+            sheet.Focus();
             if (sheet.Synthesizing)
             {
                 sheet.StopSynthesize();
@@ -334,6 +354,11 @@ namespace Harmony
         private void sheet_SynthStarted(object sender, EventArgs e)
         {
             BtnSynth.Text = "Stop";
+        }
+
+        private void TmrRedraw_Tick(object sender, EventArgs e)
+        {
+            sheet.Redraw();
         }
     }
 }

@@ -1,7 +1,5 @@
 E:\Programming\DotNet\Harmony\Harmony\bin\Debug\Harmony.exe
 E:\Programming\DotNet\Harmony\Harmony\bin\Debug\Harmony.pdb
-E:\Programming\DotNet\Harmony\Harmony\bin\Debug\Harmony.Core.dll
-E:\Programming\DotNet\Harmony\Harmony\bin\Debug\Harmony.Core.pdb
 E:\Programming\DotNet\Harmony\Harmony\obj\Debug\Harmony.csprojResolveAssemblyReference.cache
 E:\Programming\DotNet\Harmony\Harmony\obj\Debug\Harmony.FrmMain.resources
 E:\Programming\DotNet\Harmony\Harmony\obj\Debug\Harmony.Properties.Resources.resources
@@ -10,7 +8,5 @@ E:\Programming\DotNet\Harmony\Harmony\obj\Debug\Harmony.exe
 E:\Programming\DotNet\Harmony\Harmony\obj\Debug\Harmony.pdb
 E:\Programming\DotNet\Harmony\Harmony\bin\Debug\MediaToolkit.dll
 E:\Programming\DotNet\Harmony\Harmony\bin\Debug\NAudio.dll
-E:\Programming\DotNet\Harmony\Harmony\bin\Debug\NAudio.xml
 E:\Programming\DotNet\Harmony\Harmony\obj\Debug\Harmony.MusicSheet.resources
 E:\Programming\DotNet\Harmony\Harmony\bin\Debug\cantus.core.dll
-E:\Programming\DotNet\Harmony\Harmony\bin\Debug\cantus.core.pdb

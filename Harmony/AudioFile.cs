@@ -54,6 +54,11 @@ namespace Harmony
         /// </summary>
         public event FourierProgressDelegate FourierProgress;
 
+        /// <summary>
+        /// Raised when the frequency analysis is complete
+        /// </summary>
+        public event EventHandler<EventArgs> FourierComplete;
+
         public delegate void LoadCompleteDelegate(object sender, EventArgs e);
 
         /// <summary>
@@ -188,6 +193,11 @@ namespace Harmony
                 _audio.CurrentTime = value;
             }
         }
+
+        /// <summary>
+        /// If true, the frequency analysis will terminate after the current iteration.
+        /// </summary>
+        private bool _fourierCancel = false;
 
         #endregion
 
@@ -372,7 +382,9 @@ namespace Harmony
                 for (double start = 0; start + AnalyzeLen <= _data[0].Length; start += AnalyzeLen)
                 {
                     FourierAnalyze(start);
+                    if (_fourierCancel) break;
                 }
+                if (FourierComplete != null) FourierComplete(this, new EventArgs());
             });
             th.IsBackground = true;
             th.Start();
