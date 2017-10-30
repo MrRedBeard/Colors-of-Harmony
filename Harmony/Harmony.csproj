@@ -38,7 +38,7 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Headphones.ico</ApplicationIcon>
+    <ApplicationIcon>harmony.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="cantus.core">
@@ -108,6 +108,7 @@
     <EmbeddedResource Include="MediaToolkit.dll" />
     <EmbeddedResource Include="NAudio.dll" />
     <EmbeddedResource Include="cantus.core.dll" />
+    <Content Include="harmony.ico" />
     <Content Include="Headphones.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
