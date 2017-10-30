@@ -10,3 +10,12 @@ E:\Programming\DotNet\Harmony\Harmony\bin\Debug\MediaToolkit.dll
 E:\Programming\DotNet\Harmony\Harmony\bin\Debug\NAudio.dll
 E:\Programming\DotNet\Harmony\Harmony\obj\Debug\Harmony.MusicSheet.resources
 E:\Programming\DotNet\Harmony\Harmony\bin\Debug\cantus.core.dll
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Debug\Harmony.exe
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\bin\Debug\Harmony.exe
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\bin\Debug\Harmony.pdb
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Debug\Harmony.csprojResolveAssemblyReference.cache
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Debug\Harmony.FrmMain.resources
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Debug\Harmony.MusicSheet.resources
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Debug\Harmony.Properties.Resources.resources
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Debug\Harmony.csproj.GenerateResource.Cache
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Debug\Harmony.pdb

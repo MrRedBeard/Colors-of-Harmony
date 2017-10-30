@@ -7,3 +7,12 @@ E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.Properties.Resources.r
 E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.csproj.GenerateResource.Cache
 E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.exe
 E:\Programming\DotNet\Harmony\Harmony\obj\Release\Harmony.pdb
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Release\Harmony.exe
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Release\Harmony.csprojResolveAssemblyReference.cache
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Release\Harmony.FrmMain.resources
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Release\Harmony.MusicSheet.resources
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Release\Harmony.Properties.Resources.resources
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Release\Harmony.csproj.GenerateResource.Cache
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\bin\Release\Harmony.exe
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\bin\Release\Harmony.pdb
+D:\Programming\2DotNet\Colors-of-Harmony\Harmony\obj\Release\Harmony.pdb

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Colors of Harmony")]
-[assembly: AssemblyDescription("Music analyzer & visualizer")]
+[assembly: AssemblyTitle("Harmony")]
+[assembly: AssemblyDescription("Music-to Notation Transcription Program")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alex Yu")]
-[assembly: AssemblyProduct("Colors of Harmony")]
+[assembly: AssemblyProduct("Harmony")]
 [assembly: AssemblyCopyright("Copyright ©  Alex Yu 2016")]
 [assembly: AssemblyTrademark("MIT License (MIT)")]
 [assembly: AssemblyCulture("")]

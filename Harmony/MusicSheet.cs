@@ -1030,7 +1030,7 @@ namespace Harmony
         {
             try
             {
-                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.eOutputFormat.Raw))
+                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
                 {
                     object res = eval.EvalExprRaw(TbBaseNote.Text);
                     if (res is Cantus.Core.CommonTypes.BigDecimal)
@@ -1063,7 +1063,7 @@ namespace Harmony
                 string[] spl = (TbTime.Text.Split(':'));
                 double hr = 0, min;
                 double sec;
-                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.eOutputFormat.Raw))
+                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
                 {
                     if (spl.Length == 3)
                     {
@@ -1188,7 +1188,7 @@ namespace Harmony
                 string[] spl = (TbStart.Text.Split(':'));
                 double hr = 0, min;
                 double sec;
-                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.eOutputFormat.Raw))
+                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
                 {
                     if (spl.Length == 3)
                     {
@@ -1264,7 +1264,7 @@ namespace Harmony
             if (_editNote == null) return;
             try
             {
-                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.eOutputFormat.Raw))
+                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
                 {
                     object res = eval.EvalExprRaw(TbVal.Text);
                     if (res is Cantus.Core.CommonTypes.BigDecimal)
@@ -1492,6 +1492,7 @@ namespace Harmony
 
         private bool _stop = false;
         private List<Tuple< WaveOut, TimeSpan>> _synthSounds = new List<Tuple<WaveOut, TimeSpan>>();
+
         /// <summary>
         /// Stop synthesizing
         /// </summary>
@@ -1521,13 +1522,17 @@ namespace Harmony
                 Synthesizing = true;
                 _stop = false;
                 if (SynthStarted != null) SynthStarted(this, new EventArgs());
+
                 Thread th = new Thread(() => {
-                    foreach (KeyValuePair<TimeSpan, Dictionary<string, Note>> kvp in _notes.ToArray())
+                    int oldNotesCount = _notes.Count;
+
+                    foreach (KeyValuePair<TimeSpan, Dictionary<string, Note>> chord in _notes.ToArray())
                     {
                         try {
-                            if (kvp.Key < _time) continue;
-                            Thread.Sleep((int)(kvp.Key - _time).TotalMilliseconds);
-                            _time = kvp.Key;
+                            if (chord.Key < _time) continue;
+
+                            Thread.Sleep((int)(chord.Key - _time).TotalMilliseconds);
+                            _time = chord.Key;
                             canvas.Invoke(new Action(() => canvas.Invalidate()));
 
                             for (int i = _synthSounds.Count - 1; i >= 0; --i)
@@ -1553,7 +1558,7 @@ namespace Harmony
                                 return;
                             }
 
-                            foreach (Note n in kvp.Value.Values)
+                            foreach (Note n in chord.Value.Values)
                             {
                                 if (n.Parent != null) continue;
 
@@ -1568,9 +1573,11 @@ namespace Harmony
 
                                 _synthSounds.Add(new Tuple<WaveOut, TimeSpan>(waveOut, n.Value + n.Position));
                             }
+
                         }catch { }
                     }
-                    if (_time.Ticks < Length.Ticks - 10000)
+
+                    if (_time.Ticks < Length.Ticks - 10000 && _notes.Count > oldNotesCount)
                         Synthesize(); // new notes were added, continue synthesizing
                     else
                         StopSynthesize(); // we're done

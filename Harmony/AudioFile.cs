@@ -22,6 +22,8 @@ namespace Harmony
     public class AudioFile : IDisposable
     {
 
+        const double MIN_AMP = 0.5, MIN_FREQ = 82, MAX_FREQ = 1500, FACT = 4186.009 * 4, FFT_SCALE = 9600;
+
         #region "Events"
         /// <summary>
         /// Event data for Fourier Progress event, representing the result of a partial calculation
@@ -235,17 +237,19 @@ namespace Harmony
         }
 
         /// <summary>
-        /// Convert an input audio file to an arbitrary 
+        /// Convert any arbitrary input audio file to WAV format using FFMPEG
         /// </summary>
         private static string Convert(string input)
         {
             MediaFile inFile = new MediaFile(input);
             string output = Path.GetTempFileName() + ".wav";
             MediaFile outFile = new MediaFile(output);
+
             using (Engine eng = new Engine())
             {
                 eng.Convert(inFile, outFile);
             }
+
             return output;
         }
         #endregion
@@ -276,8 +280,9 @@ namespace Harmony
         }
 
         private FFTProvider _fft = new FFTProvider();
+
         /// <summary>
-        /// The interval at which frequencies are sampled to determine notes present
+        /// Get the interval at which frequencies are sampled to determine the notes that are present
         /// </summary>
         public double AnalyzeLen
         {
@@ -314,15 +319,18 @@ namespace Harmony
             TimeSpan ts = SamplesToTime(AnalyzeLen);
             List<double> amp = new List<double>();
 
-            for (int i = 1; i < Math.Min(fft.Count(), 1 + 4186.009 * 4 * (AnalyzeLen / SampleRate)); ++i)
-                fft[i] = fft[i] * Math.Pow(0.998, i-100) / 9600;
+            for (int i = 1; i < Math.Min(fft.Count(), 1 + FACT * (AnalyzeLen / SampleRate)); ++i)
+                fft[i] = fft[i] * Math.Pow(0.998, i-100) / FFT_SCALE;
 
-            for (int i = 1; i<Math.Min(fft.Count(), 1 + 4186.009  * 4 * (AnalyzeLen /  SampleRate) ); ++i)
+            for (int i = 1; i<Math.Min(fft.Count(), 1 + FACT * (AnalyzeLen /  SampleRate) ); ++i)
             {
                 if (fft[i] > 1)
                 {
                     double f = i * (SampleRate / AnalyzeLen) / 2;
                     double a = Math.Min(Math.Max(Math.Log10(Math.Abs(fft[i])), 0.000000001), 1.0);
+
+                    if (a < MIN_AMP || f < MIN_FREQ || f > MAX_FREQ) continue;
+
                     if (freq.Count > 0 &&  (f / freq[freq.Count - 1]) < 1.1 )
                     {
                         if (a >= amp[amp.Count - 1])
@@ -340,11 +348,17 @@ namespace Harmony
                 }
                 if (fft[i] > fft[max]) max = i;
             }
+
             if (freq.Count == 0)
             {
-                freq.Add(max * (SampleRate / AnalyzeLen)/ 2);
-                len.Add(ts);
-                amp.Add(Math.Min(Math.Max(Math.Abs(fft[max]), 0), 1.0));
+                double a = Math.Min(Math.Max(Math.Abs(fft[max]), 0), 1.0);
+                double f = max * (SampleRate / AnalyzeLen) / 2;
+                if (a >= MIN_AMP && f >= MIN_FREQ && f <= MAX_FREQ)
+                {
+                    freq.Add(f);
+                    len.Add(ts);
+                    amp.Add(a);
+                }
             }
 
             args.Frequency = freq;

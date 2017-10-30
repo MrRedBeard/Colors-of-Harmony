@@ -208,7 +208,7 @@
             this.MinimumSize = new System.Drawing.Size(350, 39);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Colors of Harmony";
+            this.Text = "Harmony";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.sheet_KeyUp);
