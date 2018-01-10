@@ -1030,7 +1030,8 @@ namespace Harmony
         {
             try
             {
-                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
+                //using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
+                using (CantusEvaluator eval = new CantusEvaluator())
                 {
                     object res = eval.EvalExprRaw(TbBaseNote.Text);
                     if (res is Cantus.Core.CommonTypes.BigDecimal)
@@ -1063,7 +1064,8 @@ namespace Harmony
                 string[] spl = (TbTime.Text.Split(':'));
                 double hr = 0, min;
                 double sec;
-                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
+                //using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
+                using (CantusEvaluator eval = new CantusEvaluator())
                 {
                     if (spl.Length == 3)
                     {
@@ -1188,7 +1190,8 @@ namespace Harmony
                 string[] spl = (TbStart.Text.Split(':'));
                 double hr = 0, min;
                 double sec;
-                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
+                //using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
+                using (CantusEvaluator eval = new CantusEvaluator())
                 {
                     if (spl.Length == 3)
                     {
@@ -1264,7 +1267,8 @@ namespace Harmony
             if (_editNote == null) return;
             try
             {
-                using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
+                //using (CantusEvaluator eval = new CantusEvaluator(CantusEvaluator.OutputFormat.Raw))
+                using (CantusEvaluator eval = new CantusEvaluator())
                 {
                     object res = eval.EvalExprRaw(TbVal.Text);
                     if (res is Cantus.Core.CommonTypes.BigDecimal)
